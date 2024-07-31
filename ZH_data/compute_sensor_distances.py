@@ -9,8 +9,7 @@
 
 import numpy as np
 import pandas as pd
-import glob
-import igraph
+
 from routing_lib.routing_utils import from_sumo_to_igraph_network, get_shortest_path
 import os
 import sys

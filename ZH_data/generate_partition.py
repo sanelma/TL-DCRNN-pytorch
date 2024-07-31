@@ -1,10 +1,13 @@
-##### Script to filter, clean, and process the traffic count data
+##### Creates partition of sensors into subgraphs and generates combined version of sensor coordinates for DCRNN
 ## Inputs: 
-# sensor_distances.h5
+# sensor_distances_luzern_zurich.h5
 # zurich_counts.h5
-# luzern_jan_apr2015.csv 
+# luzern_counts.h5
+# detector_coordinates_zurich.csv
+# detector_coordinates_luzern.csv
 ## Output:
-# luzern_and_zurich_counts.h5, luzern_counts.h5, zurich_counts.h5
+# sensor coordinates: sensor_coords_for_dcrnn.csv
+# partition: partition.txt.part.64
 
 
 import numpy as np
@@ -20,9 +23,6 @@ from routing_lib.routing_utils import from_sumo_to_igraph_network, get_shortest_
 import metis
 import networkx as nx
 
-import folium
-import branca.colormap as cm
-from matplotlib.cm import get_cmap
 
 ### 
 n_subgraphs = 13
