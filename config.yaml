@@ -1,0 +1,54 @@
+base_dir: data/model_32t
+data_dir:  input_data/
+
+traffic_file_name: speed_data_subsample.h5
+distances_file_name: distances.csv
+sensors_file_name: graph_sensor_locations_11k.csv
+partition_file_name:  tiny_11k_graph_new.txt.part.64
+
+data:
+
+  test_batch_size: 1
+  test_ratio: 0.2
+  val_batch_size: 1
+  validation_ratio: 0.1
+  n_samples_quick: 52000
+
+log_level: INFO
+model:
+ 
+  train_clusters:  [0,2,4,6,8,9,10,11,12,13,14,15,16,19,21,24,25,26,27,28,29,30,31] # sane diego clusters  #  [0,2,4,6,8,9,10,11,12,13,14,15,16,19,21,24,25,26,27,28,29,30,31] # all LA clusters, chosen by inspection. clusters too far from LA were excluded
+  test_clusters: [56, 57, 58, 59] # san diego clusters, chosen by inspection
+  cl_decay_steps: 100
+  horizon: 12
+  input_dim: 2
+ # l1_decay: 0
+  K: 2
+  max_diffusion_step: 2 # this is K
+  num_nodes: 169 # this is the size of the subgraphs
+  num_rnn_layers: 2
+  out_dim: 1
+  batch_size: 64
+  rnn_units: 32 # what is this? 
+  seq_len: 12
+  use_curriculum_learning: True
+train:
+  base_lr: 0.0001
+  dropout: 0
+  epoch: 0
+  num_epochs: 100
+  epsilon: 0.001
+  global_step: 0
+  lr_decay_ratio: 0.1 # multiplies learning rate: smaller number will decay faster
+  max_grad_norm: 5
+  max_to_keep: 100
+  min_learning_rate: 2.0e-06
+ # optimizer: adam
+ # patience: 50
+  steps:
+  - 20
+  - 30
+  - 40
+  - 50
+  test_every_n_epochs: 5
+  

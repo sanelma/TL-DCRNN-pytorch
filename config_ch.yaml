@@ -1,0 +1,52 @@
+base_dir: data/model_32t
+data_dir:  ZH_data/
+
+traffic_file_name: zurich_counts.h5
+traffic_file_name_combined: luzern_and_zurich_counts.h5
+target_traffic_file_name: luzern_counts.h5
+distances_file_name: sensor_distances_luzern_zurich.h5
+sensors_file_name: sensor_coords_for_dcrnn.csv
+partition_file_name:  partition.txt.part.64
+
+data:
+
+  test_batch_size: 1
+  test_ratio: 0.2
+  val_batch_size: 1
+  validation_ratio: 0.1
+  n_samples_quick: 58560 # 58560
+
+log_level: INFO
+model:
+ 
+  train_clusters: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  test_clusters:  [13]
+  cl_decay_steps: 100
+  horizon: 20
+  input_dim: 2
+  K: 2
+  max_diffusion_step: 2 # this is K
+  num_nodes: 130 # this is the size of the subgraphs
+  num_rnn_layers: 2
+  out_dim: 1
+  batch_size: 64
+  rnn_units: 32
+  seq_len: 20
+  use_curriculum_learning: True
+
+train:
+  base_lr: 0.0001
+  num_epochs: 260 # 26 #260 # 110
+  epsilon: 0.001
+  lr_decay_ratio: 0.1 # multiplies learning rate: smaller number will decay faster
+  max_grad_norm: 5
+  max_to_keep: 100
+  min_learning_rate: 2.0e-06
+ # patience: 50
+  steps:
+  - 20
+  - 30
+  - 40
+  - 50
+  test_every_n_epochs: 5
+  
